@@ -4,123 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dorak App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #f7f9fc;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            color: #333;
         }
-        .container {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 400px;
-            width: 90%;
-        }
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 20px;
-            background-color: #5e6ad2;
-            border-radius: 16px;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
-        }
-        h1 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 15px;
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 14px 20px;
-            background-color: #5e6ad2;
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 15px;
-            transition: opacity 0.2s;
-        }
-        .btn:hover {
-            opacity: 0.9;
-        }
-        .stores {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-        .stores a {
-            flex: 1;
-            padding: 10px;
-            background-color: #000;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .fallback {
-            display: none;
+        /* Hide content initially to prevent flashing before JS logic executes */
+        #main-content {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 </head>
-<body>
-    <div class="container" id="main-content">
-        <div class="logo">D</div>
-        <h1>This link can only be opened with Dorak</h1>
-        <p>If you have the app installed, click the button below to proceed and book your appointment.</p>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div id="main-content" class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] max-w-sm w-full p-8 text-center relative overflow-hidden">
         
-        <a href="#" id="open-app-btn" class="btn">Click here to proceed</a>
-        
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-            <p style="margin-bottom: 15px; font-size: 14px;">Don't have Dorak yet?</p>
-            <div class="stores">
-                <a href="#">Google Play</a>
-                <a href="#">Apple Store</a>
+        <!-- Header / Logo -->
+        <div class="mb-6">
+            <img src="/assets/logos/dorak-logo.svg" alt="Dorak Logo" class="w-24 h-24 mx-auto mb-4 drop-shadow-md">
+            <h1 class="text-xl font-bold text-gray-900 tracking-tight">Open in Dorak</h1>
+            <p class="text-sm text-gray-500 mt-2">This link requires the Dorak app to view and book your appointment.</p>
+        </div>
+
+        <!-- Primary CTA -->
+        <a href="#" id="open-app-btn" class="block w-full py-3.5 px-4 bg-[#0a0a0a] hover:bg-[#1f1f1f] text-white font-medium rounded-xl transition-colors duration-200 shadow-md">
+            Open in App
+        </a>
+
+        <!-- Fallback Stores -->
+        <div class="mt-8 pt-6 border-t border-gray-100">
+            <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Don't have the app?</p>
+            <div class="flex flex-col gap-3">
+                <a href="#" class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium rounded-xl transition-colors duration-200 border border-gray-200">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5.39 0 .77.15 1.05.43l13 13.01c.58.59.58 1.54 0 2.12l-13 13.01c-.28.28-.66.43-1.05.43-.83 0-1.5-.67-1.5-1.5z"/></svg>
+                    Google Play
+                </a>
+                <a href="#" class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium rounded-xl transition-colors duration-200 border border-gray-200">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3 15h-2v-4h2v4zm0-6h-2V7h2v4z"/></svg>
+                    App Store
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // Only trigger this deep link UI if the path starts with /p/
-        const path = window.location.pathname;
-        if (path.startsWith('/p/')) {
-            // Attempt to automatically open the app
-            const slug = path.split('/')[2];
-            const appScheme = 'dorak://book/' + slug;
-            document.getElementById('open-app-btn').href = appScheme;
+        document.addEventListener("DOMContentLoaded", function() {
+            var path = window.location.pathname; // e.g. /p/arixQCi9R5E
+            var content = document.getElementById('main-content');
+            var btn = document.getElementById('open-app-btn');
             
-            // Try to auto-redirect on mobile
-            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                setTimeout(function() {
-                    window.location.href = appScheme;
-                }, 100);
+            // Check if it's a professional profile deep link
+            if (path.startsWith('/p/') && path.length > 3) {
+                var slug = path.replace('/p/', '');
+                
+                // Show the card
+                content.style.opacity = '1';
+
+                // We use intent:// for Android Chrome, which gracefully falls back to the Play Store
+                // if the app is not installed, depending on the S.browser_fallback_url.
+                var androidIntent = 'intent://book/' + slug + '#Intent;scheme=dorak;package=dev.dorak.dorak;end';
+                
+                // Set the link. We'll use the Android intent by default.
+                // On iOS, a standard universal link or custom URL scheme (dorak://book/slug) would be used.
+                // For simplicity across both, assuming iOS universal links handle the domain directly,
+                // but since we are ON the domain, we need the custom scheme for a forced redirect.
+                var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                if (isIOS) {
+                    btn.href = 'dorak://book/' + slug;
+                } else {
+                    btn.href = androidIntent;
+                }
+
+                // Auto-redirect attempt (optional, some browsers block this if not user-initiated)
+                // window.location.href = btn.href;
+            } else {
+                // Not a deep link to a profile, just show a standard 404 message
+                content.innerHTML = `
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">404</h1>
+                    <p class="text-gray-500 mb-6">Page not found</p>
+                    <a href="https://dorak.dev" class="inline-block py-3 px-6 bg-black text-white font-medium rounded-xl">Return Home</a>
+                `;
+                content.style.opacity = '1';
             }
-        } else {
-            // Standard 404 behavior for other missing pages
-            document.getElementById('main-content').innerHTML = '<h1>404 - Page Not Found</h1><a href="/" class="btn" style="margin-top: 20px;">Return Home</a>';
-        }
+        });
     </script>
 </body>
 </html>
