@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "dev.dorak.dorak",
+    "sha256_cert_fingerprints": ["88:8E:4E:FB:6F:AE:F7:FF:03:F7:4F:DB:AB:72:61:BC:69:2A:88:9F:19:D0:46:52:0A:22:98:08:CE:1C:B2:F1"]
+  }
+}]
